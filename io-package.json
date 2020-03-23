@@ -72,8 +72,9 @@
         ]
     },
     "native": {
-        "option1": true,
-        "option2": "42"
+        "updateConnectionInterval": 300,
+        "ownGetAdminCommands": "",
+        "getAdminDevices": []
     },
     "objects": [],
     "instanceObjects": []

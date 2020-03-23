@@ -19,12 +19,13 @@
 
     <script type="text/javascript">
         // This will be called by the admin adapter when the settings page loads
+        let getAdminDevices = [];   // For table "getAdminDevices"
         function load(settings, onChange) {
             // example: select elements with id=key and class=value and insert value
             if (!settings) return;
             $('.value').each(function () {
-                var $key = $(this);
-                var id = $key.attr('id');
+                let $key = $(this);
+                let id = $key.attr('id');
                 if ($key.attr('type') === 'checkbox') {
                     // do not call onChange direct, because onChange could expect some arguments
                     $key.prop('checked', settings[id])
@@ -38,7 +39,9 @@
                         ;
                 }
             });
+            getAdminDevices = settings.getAdminDevices || [];   // For table "getAdminDevices"
             onChange(false);
+            values2table('getAdminDevices', getAdminDevices, onChange);   // For table "getAdminDevices"
             // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
             if (M) M.updateTextFields();
         }
@@ -46,18 +49,31 @@
         // This will be called by the admin adapter when the user presses the save button
         function save(callback) {
             // example: select elements with class=value and build settings object
-            var obj = {};
+            let obj = {};
             $('.value').each(function () {
-                var $this = $(this);
+                let $this = $(this);
                 if ($this.attr('type') === 'checkbox') {
                     obj[$this.attr('id')] = $this.prop('checked');
                 } else {
                     obj[$this.attr('id')] = $this.val();
                 }
             });
+            obj.getAdminDevices = table2values('getAdminDevices');
             callback(obj);
         }
     </script>
+
+    <style>
+        /* Title of each section */
+        .title { font-weight: bold; }
+        /* Info text of each section */
+        .info { margin-left: 1em; }
+        /* Table header */
+        .table-values th { height: 2em; background-color:#2196F3; font-size:90%; }
+        /* Table: Add button */
+        .table-button-add { margin: 0.3em 0 1em 0; }
+    </style>
+
 
 </head>
 
@@ -67,22 +83,68 @@
 
         <div class="row">
             <div class="col s12 m4 l2">
-                <img src="windows-control.png" class="logo">
+                <img alt="Adapter Logo" src="windows-control.png" class="logo">
             </div>
         </div>
 
-        <!-- Put your content here -->
-
-        <!-- For example columns with settings: -->
+        <!-- Section "Introduction" -->
         <div class="row">
-            <div class="col s6 input-field">
-                <input type="checkbox" class="value" id="option1" />
-                <label for="option1" class="translate">option1</label>
+            <div class="col s12">
+                <h5 class="translate">Adapter: Windows Control</h5>
+                <p class="translate info">To use this adapter, the tool GetAdmin is required. Download and setup instructions: see <a href="https://github.com/Mic-M/ioBroker.windows-control/blob/master/README.md" target="_blank">Adapter documentation on Github.</a></p>
             </div>
+        </div>
 
-            <div class="col s6 input-field">
-                <input type="text" class="value" id="option2" />
-                <label for="option2" class="translate">option2</label>
+        <!-- Section "own Commands" -->
+        <div class="row">
+            <div class="col s12">
+                <p class="translate title">Your own GetAdmin Commands</p>
+                <p class="translate info">Enter your own commands, which you entered in the GetAdmin software in column "Command". No spaces please. Separate multiple values with comma.<br>Leave this field empty, if you have not (yet) defined any commands.</p>
+                <div class="input-field col s12 m6">
+                    <input type="text" class="value" id="ownGetAdminCommands" />
+                    <label for="ownGetAdminCommands" class="translate">GetAdmin Commands (comma separated)</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Polling -->
+        <div class="row">
+            <div class="col s12">
+                <p class="translate title">Update Interval</p>
+                <p class="translate info">If activated, a state ".connected" is being created for each device. These states will be updated every number of seconds as set in the below field and will indicate if the device is connected. 0 disables this function.</p>
+                <div class="input-field col s12 m6">
+                    <input class="value validate" placeholder="300" id="updateConnectionInterval" type="number" min="0" max="100000">
+                    <label for="updateConnectionInterval" class="translate">Update Interval</label>
+                    <span class="helper-text translate">s (0 = disabled)</span>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+        <!-- Table for adding Windows devices -->
+        <div class="row">
+            <div id="tab-getAdminDevices" class="col s12">
+                <p class="translate title">Windows devices you want to control</p>
+                <p class="translate info">Add your Windows devices, which you want to control. "Device Name" will be used as part of the states. You can also (temporarily) de-activate devices if you want.</p>
+                <div class="col s12" id="getAdminDevices">
+                    <a class="btn-floating waves-effect waves-light blue table-button-add"><i class="material-icons">add</i></a>
+                    <div class="table-values-div">
+                        <table class="table-values">
+                            <thead>
+                                <tr>
+                                    <th class="header translate" data-name="deviceName">Device Name</th>
+                                    <th class="header translate" data-name="deviceIp">Device IP Address</th>
+                                    <th class="header translate" data-name="devicePort">Port</th>
+                                    <th class="header translate" data-name="active" data-type="checkbox">Active?</th>
+                                    <th class="header" data-buttons="delete up down"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 
