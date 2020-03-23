@@ -1,0 +1,80 @@
+{
+    "common": {
+        "name": "windows-control",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "首次出版"
+            }
+        },
+        "title": "Control Windows",
+        "titleLang": {
+            "en": "Control Windows",
+            "de": "Windows steuern",
+            "ru": "Окна управления",
+            "pt": "Controlar o Windows",
+            "nl": "Beheer Windows",
+            "fr": "Fenêtres de contrôle",
+            "it": "Controlla Windows",
+            "es": "Control de Windows",
+            "pl": "Kontroluj Windows",
+            "zh-cn": "控制视窗"
+        },
+        "desc": {
+            "en": "Controlling Microsoft Windows devices",
+            "de": "Steuern von Microsoft Windows-Geräten",
+            "ru": "Управление устройствами Microsoft Windows",
+            "pt": "Controlando dispositivos Microsoft Windows",
+            "nl": "Besturing van Microsoft Windows-apparaten",
+            "fr": "Contrôle des appareils Microsoft Windows",
+            "it": "Controllo dei dispositivi Microsoft Windows",
+            "es": "Control de dispositivos Microsoft Windows",
+            "pl": "Kontrolowanie urządzeń Microsoft Windows",
+            "zh-cn": "控制Microsoft Windows设备"
+        },
+        "authors": [
+            "Mic-M <iob.micm@gmail.com>"
+        ],
+        "keywords": [
+            "windows",
+            "control",
+            "microsoft",
+            "getadmin"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "windows-control.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/Mic-M/ioBroker.windows-control/master/admin/windows-control.png",
+        "readme": "https://github.com/Mic-M/ioBroker.windows-control/blob/master/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "hardware",
+        "compact": true,
+        "connectionType": "local",
+        "dataSource": "poll",
+        "materialize": true,
+        "supportCustoms": true,
+        "dependencies": [
+            {
+                "js-controller": ">=1.4.2"
+            }
+        ]
+    },
+    "native": {
+        "option1": true,
+        "option2": "42"
+    },
+    "objects": [],
+    "instanceObjects": []
+}
