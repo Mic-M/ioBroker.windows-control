@@ -1,6 +1,7 @@
 'use strict';
 /*******************************************************************************************************************
  * Adapter to Control Windows Devices
+ * https://github.com/Mic-M/ioBroker.windows-control
  *******************************************************************************************************************/
 
 
@@ -45,6 +46,7 @@ init();
  * Main Function, called with init() -> startAdapter().
  **************************************/
 function main() {
+
 
     // First, we validate and get the adapter settings
     initializeConfigValues(() => {
