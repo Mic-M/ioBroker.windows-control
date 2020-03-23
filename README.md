@@ -1,4 +1,4 @@
-![Logo](admin/windows-control.png)
+![Logo](admin/windows-control_90.png)
 # ioBroker.windows-control
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.windows-control.svg)](https://www.npmjs.com/package/iobroker.windows-control)
@@ -12,68 +12,52 @@
 
 **Tests:**: [![Travis-CI](http://img.shields.io/travis/Mic-M/ioBroker.windows-control/master.svg)](https://travis-ci.org/Mic-M/ioBroker.windows-control)
 
-## windows-control adapter for ioBroker
+## Adapter to control Windows devices
 
-Controlling Microsoft Windows devices
+This adapter provides controlling Microsoft Windows devices. It is requried the tool GetAdmin being installed on every Windows device which you want to control.
+<br>
+<strong>Many thanks to [Vladimir Vilisov](https://blog.instalator.ru) for his tool GetAdmin!</strong> 
 
-## Developer manual
-This section is intended for the developer. It can be deleted later
+## NOTE: THIS ADAPTER IS FOR TESTING ONLY
 
-### Getting started
+Please note that this adapter is for testing only at this time. Some text is still in German here, and will be translated later.
 
-You are almost done, only a few steps left:
-1. Create a new repository on GitHub with the name `ioBroker.windows-control`
+## Tool GetAdmin
+Für diesen Adapter benötigt ihr GetAdmin auf jedem Windows-Rechner, den ihr mit ioBroker steuern möchtet. GetAdmin ist eine einzelne 776 kB große (bzw. kleine) exe-Datei, die von Vladimir Vilisov in Delphi geschrieben und er [auf seinem Blog instalator.ru](https://blog.instalator.ru/archives/47) veröffentlicht hat.
+Download:
+ 1. Primäre Quelle: https://blog.instalator.ru/archives/47
+ 2. Falls nicht (mehr) verfügbar, ist eine Kopie hier auf Github unter "files" abgelegt.
 
-1. Push all files to the GitHub repo. The creator has already set up the local repository for you:  
-    ```bash
-    git push origin master
-    ```
-1. Head over to [main.js](main.js) and start programming!
+### Einrichtung
+Die `GetAdmin.exe` in einem beliebigen Verzeichnis speichern und ausführen. Dann folgendes einstellen:
+1. Ganz oben links unter "Server":
+    * IP: die IP-Adresse der ioBrokers eintragen
+    * Port: Den Standard-Port 8585 kann man so lassen
+2. Oben unter "Options" Haken bei Minimize und Startup setzen, damit sich GetAdmin bei jedem Neustart minimiert ausgeführt wird.
+3. Mit "Save" bestätigen.
 
-### Best Practices
-We've collected some [best practices](https://github.com/ioBroker/ioBroker.repositories#development-and-coding-best-practices) regarding ioBroker development and coding in general. If you're new to ioBroker or Node.js, you should
-check them out. If you're already experienced, you should also take a look at them - you might learn something new :)
+ ### Beispiele für individuelle Einträge in GetAdmin Command list:
+* Ruhezustand: 
+    * in Spalte `Command` z.B. `m_hibernate` eintragen
+    * in Spalte `PATH or URL` eintragen: `shutdown`
+    * in Spalte `PARAMETERS` eintragen: `-h`
+* Energie sparen:
+    * in Spalte `Command` z.B. `m_sleep` eintragen
+    * in Spalte `PATH or URL` eintragen: `rundll32.exe`
+    * in Spalte `PARAMETERS` eintragen: `powrprof.dll,SetSuspendState`
 
-### Scripts in `package.json`
-Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
-| Script name | Description                                              |
-|-------------|----------------------------------------------------------|
-| `test:js`   | Executes the tests you defined in `*.test.js` files.     |
-| `test:package`    | Ensures your `package.json` and `io-package.json` are valid. |
-| `test` | Performs a minimal test run on package files and your tests. |
-| `lint` | Runs `ESLint` to check your code for formatting errors and potential bugs. |
+Weitere mögliche Parameter am besten googlen ;)
 
-### Writing tests
-When done right, testing code is invaluable, because it gives you the 
-confidence to change your code while knowing exactly if and when 
-something breaks. A good read on the topic of test-driven development 
-is https://hackernoon.com/introduction-to-test-driven-development-tdd-61a13bc92d92. 
-Although writing tests before the code might seem strange at first, but it has very 
-clear upsides.
 
-The template provides you with basic tests for the adapter startup and package files.
-It is recommended that you add your own tests into the mix.
+### Weitere Infos zu GetAdmin und den Einstellungen
+* ioBroker Forum-Thread [Windows-Steuerung (GetAdmin)](https://forum.iobroker.net/topic/1570/windows-steuerung)
+* Der [Blogartikel](https://blog.instalator.ru/archives/47) der GetAdmin-Veröffentlichung. Ist in russisch, ggf. mit Google Translate oder ähnlichem arbeiten.
 
-### Publishing the adapter
-To get your adapter released in ioBroker, please refer to the documentation 
-of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
 
-### Test the adapter manually on a local ioBroker installation
-In order to install the adapter locally without publishing, the following steps are recommended:
-1. Create a tarball from your dev directory:  
-    ```bash
-    npm pack
-    ```
-1. Upload the resulting file to your ioBroker host
-1. Install it locally (The paths are different on Windows):
-    ```bash
-    cd /opt/iobroker
-    npm i /path/to/tarball.tgz
-    ```
+### ioBroker-Adaper-Einstellungen
 
-For later updates, the above procedure is not necessary. Just do the following:
-1. Overwrite the changed files in the adapter directory (`/opt/iobroker/node_modules/iobroker.windows-control`)
-1. Execute `iobroker upload windows-control` on the ioBroker host
+Mein Anspruch ist, dass diese selbsterklärend sind. Ich werde die Beschreiben noch erweitern. Bei Fragen, Anregungen, Verbesserungsvorschläge: sehr gerne bitte im ioBroker-Forum.
+
 
 ## Changelog
 
@@ -83,7 +67,7 @@ For later updates, the above procedure is not necessary. Just do the following:
 ## License
 MIT License
 
-Copyright (c) 2020 Mic-M <iob.micm@gmail.com>
+Copyright (c) 2020 Mic-M
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
