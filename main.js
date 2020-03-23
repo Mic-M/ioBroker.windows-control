@@ -9,7 +9,7 @@
  * Global constants and variables
  ******************************************************/
 const utils = require('@iobroker/adapter-core'); // The adapter-core module
-const request = require('request');
+const request = require('request'); // for Travis CI: in adapter dir, execute: "npm install request --save"
 
 // Helper Functions
 const path = require('path');
@@ -56,6 +56,8 @@ function main() {
         // Next, we create all objects (states) which we need
         createAdapterObjects(statesToProcess, () => {
 
+/*
+ * -------- Remove at this point: Channels will not be deleted within buildNeededStates(), and we actually don't really need 'em. 
             // States created, now add info (like IP address) to device channels
             // No need for callback/async here...
             for (const lpConfDevice of CONF_DEVICES) {
@@ -66,6 +68,7 @@ function main() {
                     native: {},
                 });
             }
+*/
 
             // States created, so we subscribe to all adapter states
             adapter.subscribeStates('*');
@@ -104,7 +107,7 @@ function killTimer() {
 function updateConnectionStates(callback = undefined) {
 
     if (CONF_UPDATE_INTERVAL > 0) {
-        adapter.log.debug('Update of connection states was triggered.');
+        adapter.log.debug('Update of connection states (.connected) just triggered.');
         for (let i = 0; i < CONF_DEVICES.length; i++) {
 
             const options = { url: 'http://' + CONF_DEVICES[i].deviceIp + ':' + CONF_DEVICES[i].devicePort + '/?chk=GetAdmin' };

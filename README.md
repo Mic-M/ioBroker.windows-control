@@ -10,7 +10,7 @@
 
 [![NPM](https://nodei.co/npm/iobroker.windows-control.png?downloads=true)](https://nodei.co/npm/iobroker.windows-control/)
 
-**Tests:**: [![Travis-CI](http://img.shields.io/travis/Mic-M/ioBroker.windows-control/master.svg)](https://travis-ci.org/Mic-M/ioBroker.windows-control)
+**Tests:** [![Travis-CI](http://img.shields.io/travis/Mic-M/ioBroker.windows-control/master.svg)](https://travis-ci.org/Mic-M/ioBroker.windows-control)
 
 ## Adapter to control Windows devices
 
