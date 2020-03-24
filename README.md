@@ -61,6 +61,9 @@ Mein Anspruch ist, dass diese selbsterklärend sind. Ich werde die Beschreiben n
 
 ## Changelog
 
+### 0.0.3
+* (Mic-M) Fix `io-package.json` (removed one redundand comma, not sure why node.js is not able to autocorrect such minor issue)
+
 ### 0.0.2
 * (Mic-M) Fixed sendkey issue
 * (Mic-M) State _sendKey: provide all supported keys as dropdown and no longer as open text field.

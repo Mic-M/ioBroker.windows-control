@@ -1,10 +1,13 @@
 {
     "common": {
         "name": "windows-control",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "news": {
+            "0.0.3": {
+                "en": "fix io-package.json (removed one redundand comma, not sure why node.js is not able to autocorrect such minor issue)"
+            },
             "0.0.2": {
-                "en": "1. Fixed sendkey issue; 2. State _sendKey: provide all supported keys as dropdown; 3. Renamed states: sendKey->_sendKey, connected->_connection",
+                "en": "1. Fixed sendkey issue; 2. State _sendKey: provide all supported keys as dropdown; 3. Renamed states: sendKey->_sendKey, connected->_connection"
             },
             "0.0.1": {
                 "en": "Initial release"
