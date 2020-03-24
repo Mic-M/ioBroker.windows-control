@@ -33,9 +33,11 @@ let CONF_USERCMDS = [];
 // Polling Interval (number of seconds - or 0 if disabled)
 let CONF_UPDATE_INTERVAL = 0;
 
-// Supported Get Admin Commands
+// Supported Get Admin Commands (Version 2.6)
 const GETADMIN_COMMANDS = ['process', 'shutdown', 'poweroff', 'reboot', 'forceifhung', 'logoff', 'monitor1', 'monitor2']; 
 
+// Supported Get Admin Keys (Version 2.6)
+const GETADMIN_KEYS = ['CTRL', 'RCTRL', 'ALT', 'RALT', 'SHIFT', 'RSHIFT', 'WIN', 'RWIN', 'ESC', 'ENT', 'DEL', 'INS', 'VOLUP', 'VOLDN', 'MUTE', 'NEXT', 'PREV', 'PLAY', 'STOP', 'BACK', 'SPACE', 'TAB', 'NUMP', 'NUMS', 'NUMD', 'NUM*', 'NUMM', 'NUML', 'CAPS', 'END', 'HOME', 'PGDN', 'PGUP', 'SCRL', 'PRNTSCR', 'SLEEP', 'DOWN', 'UP', 'LEFT', 'RIGHT', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'F13', 'F14', 'F15', 'F16', 'F17', 'F18', 'F19', 'F20', 'F21', 'F22', 'F23', 'F24', 'NUM0', 'NUM1', 'NUM2', 'NUM3', 'NUM4', 'NUM5', 'NUM6', 'NUM7', 'NUM8', 'NUM9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
 /**************************************
  * Initialize the adapter
@@ -56,8 +58,6 @@ function main() {
         // Next, we create all objects (states) which we need
         createAdapterObjects(statesToProcess, () => {
 
-/*
- * -------- Remove at this point: Channels will not be deleted within buildNeededStates(), and we actually don't really need 'em. 
             // States created, now add info (like IP address) to device channels
             // No need for callback/async here...
             for (const lpConfDevice of CONF_DEVICES) {
@@ -68,7 +68,7 @@ function main() {
                     native: {},
                 });
             }
-*/
+
 
             // States created, so we subscribe to all adapter states
             adapter.subscribeStates('*');
@@ -107,7 +107,7 @@ function killTimer() {
 function updateConnectionStates(callback = undefined) {
 
     if (CONF_UPDATE_INTERVAL > 0) {
-        adapter.log.debug('Update of connection states (.connected) just triggered.');
+        adapter.log.debug('Update of connection states (_connection) just triggered.');
         for (let i = 0; i < CONF_DEVICES.length; i++) {
 
             const options = { url: 'http://' + CONF_DEVICES[i].deviceIp + ':' + CONF_DEVICES[i].devicePort + '/?chk=GetAdmin' };
@@ -116,7 +116,7 @@ function updateConnectionStates(callback = undefined) {
             request(options, function (error, response) {
                 if ( (response !== undefined) && !error && ( parseInt(response.statusCode) == 200 )) {
                     adapter.log.debug(CONF_DEVICES[i].deviceName + ' responded with [OK], so connection is given.'); 
-                    adapter.setState(CONF_DEVICES[i].deviceName + '.connected', {val: true, ack: true});
+                    adapter.setState(CONF_DEVICES[i].deviceName + '._connection', {val: true, ack: true});
                     if (typeof callback === 'function') {
                         return callback(true);
                     } else {
@@ -124,7 +124,7 @@ function updateConnectionStates(callback = undefined) {
                     }
                 } else {
                     adapter.log.debug('No response from ' + CONF_DEVICES[i].deviceName + ', so there is no connection.'); 
-                    adapter.setState(CONF_DEVICES[i].deviceName + '.connected', {val: false, ack: true});
+                    adapter.setState(CONF_DEVICES[i].deviceName + '._connection', {val: false, ack: true});
                     if (typeof callback === 'function') {
                         return callback(true);
                     } else {
@@ -156,14 +156,28 @@ function stateChanges(statePath, obj) {
 
             // Get the device + command state portion of statePath (like test.0.PC-Maria.shutdown)
             const name = statePath.split('.')[statePath.split('.').length - 2];   // e.g. [PC-Maria]
-            const command = statePath.split('.')[statePath.split('.').length - 1];  // e.g. [shutdown]
+            const whichState = statePath.split('.')[statePath.split('.').length - 1];  // e.g. [shutdown]
 
             // Next, get the ip
             const ip = helper.getConfigValuePerKey(CONF_DEVICES, 'deviceName', name, 'deviceIp');
             const port = helper.getConfigValuePerKey(CONF_DEVICES, 'deviceName', name, 'devicePort');
+
+            // What is the new value?
+            const newVal = obj.val;
+
             if( (ip != -1) && (port != -1) ) {
-                const cmdFinal = (command == 'sendKey') ? 'key' : 'cmd';
-                getAdminSendCommand(statePath, name, ip, port, cmdFinal, command);
+                let type = '';
+                let cmd = '';
+                switch (whichState) {
+                    case '_sendKey' :
+                        type = 'key';
+                        cmd = newVal;
+                        break;
+                    default:
+                        type = 'cmd';
+                        cmd = whichState;
+                }                
+                getAdminSendCommand(statePath, name, ip, port, type, cmd);
             } else {
                 adapter.log.warn('No configration found for [' + name + '], therefore we were not able to send a command.');
             }            
@@ -180,12 +194,12 @@ function stateChanges(statePath, obj) {
  * @param {string}  name       Name of the Windows computer
  * @param {string}  ip         IP address of Windows computer, like 10.10.0.107
  * @param {string}  port       Port, like 8585
- * @param {string}  action     If command, use 'cmd', if key, use 'key', etc.
- * @param {string}  command    User specific command, like "m_hibernate" or "poweroff"
+ * @param {string}  type       cmd, chk, or key
+ * @param {string}  command    Command
  */
-function getAdminSendCommand(statePath, name, ip, port, action, command) {
+function getAdminSendCommand(statePath, name, ip, port, type, command) {
     
-    const options = { url: 'http://' + ip + ':' + port + '/?' + action + '=' + command };
+    const options = { url: 'http://' + ip + ':' + port + '/?' + type + '=' + command };
 
     adapter.log.debug('Send command to ' + name + ': ' + options.url);
     adapter.log.info('Send command [' + command + '] to ' + name); 
@@ -197,15 +211,15 @@ function getAdminSendCommand(statePath, name, ip, port, action, command) {
                 // We acknowledge the positive response
                 adapter.setState(statePath, {ack:true}); // just send ack:true
                 
-                // Also, we update the .connected state at this point.
-                if (CONF_UPDATE_INTERVAL > 0) adapter.setState(name + '.connected', {val: true, ack: true});
+                // Also, we update the _connection state at this point.
+                if (CONF_UPDATE_INTERVAL > 0) adapter.setState(name + '._connection', {val: true, ack: true});
 
             } else {
                 adapter.log.warn(name + ' responds with unexpected status code [' + response.statusCode + ']');
             }
         } else {
             adapter.log.info('No response from ' + name + ', so it seems to be off.');
-            if (CONF_UPDATE_INTERVAL > 0) adapter.setState(name + '.connected', {val: false, ack: true});
+            if (CONF_UPDATE_INTERVAL > 0) adapter.setState(name + '._connection', {val: false, ack: true});
         }
     });
 }
@@ -238,34 +252,65 @@ function buildNeededStates() {
         }
 
         // Create State for sending a key
-        finalStates.push([lpConfDevice.deviceName + '.sendKey', {name:'Send Key', type:'string', read:true, write:true, role:'state', def:'' }]);
+        const dropdown = {};
+        for (const lpEntry of GETADMIN_KEYS) {
+            //dropdown += '"' + lpEntry + '":"' + lpEntry + '",'; // fill JSON string
+            dropdown[lpEntry] = lpEntry;
+        }
+        //let dropdownJSON = JSON.parse(dropdown); // convert to JSON
 
-        // Create "connected" state (polling)
+        finalStates.push([lpConfDevice.deviceName + '._sendKey', {name:'Send Key', type:'string', read:true, write:true, role:'state', states:dropdown, def:'' }]);
+
+        // Create "_connection" state
         if (CONF_UPDATE_INTERVAL > 0) {
-            finalStates.push([lpConfDevice.deviceName + '.connected', {name:'Connection status', type:'boolean', read:true, write:false, role:'state', def:false }]);
+            finalStates.push([lpConfDevice.deviceName + '._connection', {name:'Connection status', type:'boolean', read:true, write:false, role:'state', def:false }]);
         }
     }
 
 
     /////////////////////////////////////////
-    // B: Delete all redundant states which are no longer used.
+    // B: Delete all redundant states and channels which are no longer used.
     /////////////////////////////////////////
-    // Let's get all states, which we still need, into an array
+
+    // Let's get all states and devices, which we still need, into an array
     const statesUsed = [];
+    const channelsUsed = [];
     for (const lpStateObj of finalStates) {
-        statesUsed.push(adapter.namespace + '.' + lpStateObj[0]);
+
+        const lpState = lpStateObj[0].toString(); // like: "GuestRoom-PC.logoff"
+        const lpDevice = lpState.split('.')[0]; // like: GuestRoom-PC
+        statesUsed.push(adapter.namespace + '.' + lpState);
+        channelsUsed.push(adapter.namespace + '.' + lpDevice);
     }
+
     // Next, delete all states no longer needed.
     adapter.getStatesOf(function(err, result) {
-        for (const lpState of result) {
-            const statePath = lpState._id;
-            if (statesUsed.indexOf(statePath) == -1) {
-                // State is no longer needed.
-                adapter.log.info('State [' + statePath + '] is no longer used, so we delete it.');
-                adapter.delForeignObject(statePath); // Delete state.
+        if (result != undefined) {
+            for (const lpState of result) {
+                const statePath = lpState._id;
+                if (statesUsed.indexOf(statePath) == -1) {
+                    // State is no longer needed.
+                    adapter.log.info('State [' + statePath + '] is no longer used, so we delete it.');
+                    adapter.delForeignObject(statePath); // Delete state.
+                }
             }
         }
     });
+
+    // Next, delete all channels no longer needed.
+    adapter.getChannelsOf(function(err, result) {
+        if (result != undefined) {
+            for (const lpState of result) {
+                const statePath = lpState._id;
+                if (channelsUsed.indexOf(statePath) == -1) {
+                    // Channel is no longer needed.
+                    adapter.log.info('Channel [' + statePath + '] is no longer used, so we delete it.');
+                    adapter.delForeignObject(statePath); // Delete channel.
+                }
+            }
+        }
+    });    
+
 
     return finalStates;
 

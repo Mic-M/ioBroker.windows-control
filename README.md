@@ -61,8 +61,13 @@ Mein Anspruch ist, dass diese selbsterklärend sind. Ich werde die Beschreiben n
 
 ## Changelog
 
+### 0.0.2
+* (Mic-M) Fixed sendkey issue
+* (Mic-M) State _sendKey: provide all supported keys as dropdown and no longer as open text field.
+* (Mic-M) Renamed states: sendKey -> _sendKey, connected -> _connection
+
 ### 0.0.1
-* (Mic-M) initial release
+* (Mic-M) Initial release
 
 ## License
 MIT License

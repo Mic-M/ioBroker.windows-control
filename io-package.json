@@ -1,19 +1,13 @@
 {
     "common": {
         "name": "windows-control",
-        "version": "0.0.1",
+        "version": "0.0.2",
         "news": {
+            "0.0.2": {
+                "en": "1. Fixed sendkey issue; 2. State _sendKey: provide all supported keys as dropdown; 3. Renamed states: sendKey->_sendKey, connected->_connection",
+            },
             "0.0.1": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Начальная версия",
-                "pt": "lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie",
-                "zh-cn": "首次出版"
+                "en": "Initial release"
             }
         },
         "title": "Control Windows",
