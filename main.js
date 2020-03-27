@@ -39,6 +39,14 @@ const GETADMIN_COMMANDS = ['process', 'shutdown', 'poweroff', 'reboot', 'forceif
 // Supported Get Admin Keys (Version 2.6)
 const GETADMIN_KEYS = ['CTRL', 'RCTRL', 'ALT', 'RALT', 'SHIFT', 'RSHIFT', 'WIN', 'RWIN', 'ESC', 'ENT', 'DEL', 'INS', 'VOLUP', 'VOLDN', 'MUTE', 'NEXT', 'PREV', 'PLAY', 'STOP', 'BACK', 'SPACE', 'TAB', 'NUMP', 'NUMS', 'NUMD', 'NUM*', 'NUMM', 'NUML', 'CAPS', 'END', 'HOME', 'PGDN', 'PGUP', 'SCRL', 'PRNTSCR', 'SLEEP', 'DOWN', 'UP', 'LEFT', 'RIGHT', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'F13', 'F14', 'F15', 'F16', 'F17', 'F18', 'F19', 'F20', 'F21', 'F22', 'F23', 'F24', 'NUM0', 'NUM1', 'NUM2', 'NUM3', 'NUM4', 'NUM5', 'NUM6', 'NUM7', 'NUM8', 'NUM9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
+// State _processGetStatusResult value
+let PROCESSSTATUS_VAL = [];
+
+// How many elements to keep in PROCESSSTATUS_VAL?
+const PROCESSSTATUS_MAX = 30;
+
+
+
 /**************************************
  * Initialize the adapter
  **************************************/
@@ -140,7 +148,6 @@ function updateConnectionStates(callback = undefined) {
 
 
 
-
 /**
  * Called once a subscribed state changes
  * @param {string} statePath   State Path
@@ -151,38 +158,63 @@ function stateChanges(statePath, obj) {
     if (obj) {
         // The state was changed
 
-        // Send command only if val=true and ack=false. ack will be set to true later, once confirmed.
-        if (obj.val && !obj.ack) {
+        // Get the device + command state portion of statePath (like test.0.PC-Maria.shutdown)
+        const name = statePath.split('.')[statePath.split('.').length - 2];   // e.g. [PC-Maria]
+        const whichState = statePath.split('.')[statePath.split('.').length - 1];  // e.g. [shutdown]
 
-            // Get the device + command state portion of statePath (like test.0.PC-Maria.shutdown)
-            const name = statePath.split('.')[statePath.split('.').length - 2];   // e.g. [PC-Maria]
-            const whichState = statePath.split('.')[statePath.split('.').length - 1];  // e.g. [shutdown]
+        // get IP and port
+        const ip = helper.getConfigValuePerKey(CONF_DEVICES, 'deviceName', name, 'deviceIp');
+        const port = helper.getConfigValuePerKey(CONF_DEVICES, 'deviceName', name, 'devicePort');
 
-            // Next, get the ip
-            const ip = helper.getConfigValuePerKey(CONF_DEVICES, 'deviceName', name, 'deviceIp');
-            const port = helper.getConfigValuePerKey(CONF_DEVICES, 'deviceName', name, 'devicePort');
+        //////////////////////////////
+        // Subscribe: Process Status
+        //////////////////////////////
+        if(statePath.endsWith('_processGetStatus')) {
+            if (obj.val && !obj.ack) { // state value (val) is true and ack=false. ack will be set to true later, once confirmed.
 
-            // What is the new value?
-            const newVal = obj.val;
+                const whichProcess = obj.val.trim();
+                getAdminSendCommand(statePath, name, ip, port, 'chk', whichProcess, function(returnedBody) {
+                    // returnedBody looks like: [<html>chrome.exe Running!<p>true</p></html>]
+                    let status = '';
+                    const match = returnedBody.match(/<html>.*<p>(true|false)<\/p><\/html>/);
+                    if (match == null) {
+                        status = 'unknown';
+                    } else {
+                        status = match[1]; // the match of the regexp will be returning true or false as STRING
+                    }
+                    PROCESSSTATUS_VAL.unshift({process: whichProcess, status: status, ts: Date.now()});
+                    PROCESSSTATUS_VAL = PROCESSSTATUS_VAL.slice(0, PROCESSSTATUS_MAX); // Limit the number of elements in the array
+                    adapter.setState(name + '._processGetStatusResult', JSON.stringify(PROCESSSTATUS_VAL));
+                });
+            }
+        } else {
+            //////////////////////////////
+            // Subscribe: Rest
+            //////////////////////////////
+            if (obj.val && !obj.ack) { // state value (val) is true and ack=false. ack will be set to true later, once confirmed.
+                
+                if( (ip != -1) && (port != -1) ) {
+                    let type = '';
+                    let cmd = '';
+                    switch (whichState) {
+                        case '_sendKey' :
+                            type = 'key';
+                            cmd = obj.val;
+                            break;
+                        default:
+                            type = 'cmd';
+                            cmd = whichState;
+                    }                
+                    getAdminSendCommand(statePath, name, ip, port, type, cmd);
+                } else {
+                    adapter.log.warn('No configration found for [' + name + '], therefore we were not able to send a command.');
+                }            
 
-            if( (ip != -1) && (port != -1) ) {
-                let type = '';
-                let cmd = '';
-                switch (whichState) {
-                    case '_sendKey' :
-                        type = 'key';
-                        cmd = newVal;
-                        break;
-                    default:
-                        type = 'cmd';
-                        cmd = whichState;
-                }                
-                getAdminSendCommand(statePath, name, ip, port, type, cmd);
-            } else {
-                adapter.log.warn('No configration found for [' + name + '], therefore we were not able to send a command.');
-            }            
+            }
 
         }
+        
+
 
     }
 }
@@ -196,17 +228,19 @@ function stateChanges(statePath, obj) {
  * @param {string}  port       Port, like 8585
  * @param {string}  type       cmd, chk, or key
  * @param {string}  command    Command
+ * @param {object}  [callback] Optional: Callback function. Returns the body or an empty string if no body.
  */
-function getAdminSendCommand(statePath, name, ip, port, type, command) {
+function getAdminSendCommand(statePath, name, ip, port, type, command, callback = undefined) {
     
     const options = { url: 'http://' + ip + ':' + port + '/?' + type + '=' + command };
 
     adapter.log.debug('Send command to ' + name + ': ' + options.url);
-    adapter.log.info('Send command [' + command + '] to ' + name); 
-    request(options, function (error, response) {
+    //adapter.log.info('Send command [' + command + '] to ' + name); 
+    request(options, function (error, response, body) {
+        let responseReturn = '';
         if ( (response !== undefined) && !error ) {
             if ( parseInt(response.statusCode) == 200 ) {
-                adapter.log.info(name + ' responded with [OK]'); 
+                adapter.log.debug(name + ' responded with [OK]'); 
                 
                 // We acknowledge the positive response
                 adapter.setState(statePath, {ack:true}); // just send ack:true
@@ -214,12 +248,20 @@ function getAdminSendCommand(statePath, name, ip, port, type, command) {
                 // Also, we update the _connection state at this point.
                 if (CONF_UPDATE_INTERVAL > 0) adapter.setState(name + '._connection', {val: true, ack: true});
 
+                // this is returned by GetAdmin
+                responseReturn = body;
+
             } else {
                 adapter.log.warn(name + ' responds with unexpected status code [' + response.statusCode + ']');
             }
         } else {
             adapter.log.info('No response from ' + name + ', so it seems to be off.');
             if (CONF_UPDATE_INTERVAL > 0) adapter.setState(name + '._connection', {val: false, ack: true});
+        }
+        if (typeof callback === 'function') {
+            return callback(responseReturn);
+        } else {
+            return;
         }
     });
 }
@@ -251,6 +293,11 @@ function buildNeededStates() {
             }
         }
 
+        // Create states for checking if process is running
+        finalStates.push([lpConfDevice.deviceName + '._processGetStatus', {name:'Get status of a process', type:'string', read:true, write:true, role:'state', def:'' }]);
+        finalStates.push([lpConfDevice.deviceName + '._processGetStatusResult', {name:'The response of _processGetStatus', type:'string', read:true, write:false, role:'state', def:'' }]);
+
+        
         // Create State for sending a key
         const dropdown = {};
         for (const lpEntry of GETADMIN_KEYS) {
@@ -263,7 +310,7 @@ function buildNeededStates() {
 
         // Create "_connection" state
         if (CONF_UPDATE_INTERVAL > 0) {
-            finalStates.push([lpConfDevice.deviceName + '._connection', {name:'Connection status', type:'boolean', read:true, write:false, role:'state', def:false }]);
+            finalStates.push([lpConfDevice.deviceName + '._connection', {name:'Connection status', type:'boolean', read:true, write:false, role:'indicator.connected', def:false }]);
         }
     }
 
@@ -416,7 +463,7 @@ function initializeConfigValues(callback = undefined) {
 
     // Update Interval for Connection states
     if (!helper.isLikeEmpty(adapter.config.updateConnectionInterval)) {
-        const polling = parseInt(adapter.config.updateConnectionInterval);
+        const polling = parseInt(adapter.config.updateConnectionInterval.toString());
         // not less than 5 seconds
         if (polling < 5 || polling > 10000) {
             CONF_UPDATE_INTERVAL = 0;

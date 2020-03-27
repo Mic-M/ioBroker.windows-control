@@ -61,6 +61,9 @@ Mein Anspruch ist, dass diese selbsterklärend sind. Ich werde die Beschreiben n
 
 ## Changelog
 
+### 0.1.0
+* (Mic-M) Add states "_processGetStatus" and "_processGetStatusResult" to check if a Windows process (like Chrome browser) is running or not
+
 ### 0.0.3
 * (Mic-M) Fix `io-package.json` (removed one redundand comma, not sure why node.js is not able to autocorrect such minor issue)
 
