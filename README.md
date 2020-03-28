@@ -18,48 +18,48 @@ This adapter provides controlling Microsoft Windows devices. It is requried the 
 <br>
 <strong>Many thanks to [Vladimir Vilisov](https://blog.instalator.ru) for his tool GetAdmin!</strong> 
 
-## NOTE: THIS ADAPTER IS FOR TESTING ONLY
-
-Please note that this adapter is for testing only at this time. Some text is still in German here, and will be translated later.
-
 ## Tool GetAdmin
-Für diesen Adapter benötigt ihr GetAdmin auf jedem Windows-Rechner, den ihr mit ioBroker steuern möchtet. GetAdmin ist eine einzelne 776 kB große (bzw. kleine) exe-Datei, die von Vladimir Vilisov in Delphi geschrieben und er [auf seinem Blog instalator.ru](https://blog.instalator.ru/archives/47) veröffentlicht hat.
+
+To use this adapter, it is required to run the tool GetAdmin (version 2.6) on each Windows device you want to control.
+GetAdmin is a single exe file (776 kB). It was coded by Vladimir Vilisov in Delphi and published [on his Blog instalator.ru](https://blog.instalator.ru/archives/47).
 Download:
- 1. Primäre Quelle: https://blog.instalator.ru/archives/47
- 2. Falls nicht (mehr) verfügbar, ist eine Kopie hier auf Github unter "files" abgelegt.
+ 1. Primary source: https://blog.instalator.ru/archives/47
+ 2. If not available, you will find a copy on this adapter's Github site [in the folder "files"](https://github.com/Mic-M/ioBroker.windows-control/tree/master/files).
+ 
 
-### Einrichtung
-Die `GetAdmin.exe` in einem beliebigen Verzeichnis speichern und ausführen. Dann folgendes einstellen:
-1. Ganz oben links unter "Server":
-    * IP: die IP-Adresse der ioBrokers eintragen
-    * Port: Den Standard-Port 8585 kann man so lassen
-2. Oben unter "Options" Haken bei Minimize und Startup setzen, damit sich GetAdmin bei jedem Neustart minimiert ausgeführt wird.
-3. Mit "Save" bestätigen.
+### Configuration
 
- ### Beispiele für individuelle Einträge in GetAdmin Command list:
-* Ruhezustand: 
-    * in Spalte `Command` z.B. `m_hibernate` eintragen
-    * in Spalte `PATH or URL` eintragen: `shutdown`
-    * in Spalte `PARAMETERS` eintragen: `-h`
-* Energie sparen:
-    * in Spalte `Command` z.B. `m_sleep` eintragen
-    * in Spalte `PATH or URL` eintragen: `rundll32.exe`
-    * in Spalte `PARAMETERS` eintragen: `powrprof.dll,SetSuspendState`
+Place the `GetAdmin.exe` file in any folder of your Windows device. Execute the file and set the following:
+1. Top left in the "Server" section:
+    * IP: the IP address of your ioBroker server
+    * Port: `8585` is the standard port. Usually, there is no need to change this port.
+2. At the top in the "Options" section: Activiate "Minimize on Tray" and "Startup" to autostart the program minimized to the system tray.
+3. Confirm with "Save".
 
-Weitere mögliche Parameter am besten googlen ;)
+![GetAdmin Settings](img/getadmin-settings.png)
 
+### Examples for individual entries in the GetAdmin.exe Command list:
+* Hibernation (German: Ruhezustand): 
+    * Column `Command`: enter `m_hibernate` or any other name of your choice (no spaces, please)
+    * Column `PATH or URL`: `shutdown`
+    * Column `PARAMETERS`: `-h`
+* Standby (German: Energie sparen):
+    * Column `Command`: enter `m_sleep` or any other name of your choice (no spaces, please)
+    * Column `PATH or URL`: `rundll32.exe`
+    * Column `PARAMETERS`: `powrprof.dll,SetSuspendState`
 
-### Weitere Infos zu GetAdmin und den Einstellungen
-* ioBroker Forum-Thread [Windows-Steuerung (GetAdmin)](https://forum.iobroker.net/topic/1570/windows-steuerung)
-* Der [Blogartikel](https://blog.instalator.ru/archives/47) der GetAdmin-Veröffentlichung. Ist in russisch, ggf. mit Google Translate oder ähnlichem arbeiten.
-
-
-### ioBroker-Adaper-Einstellungen
-
-Mein Anspruch ist, dass diese selbsterklärend sind. Ich werde die Beschreiben noch erweitern. Bei Fragen, Anregungen, Verbesserungsvorschläge: sehr gerne bitte im ioBroker-Forum.
+### Further Information
+* ioBroker Forum:
+    * [Adapter Windows Control](https://forum.iobroker.net/topic/31485/)
+    * [Windows-Steuerung](https://forum.iobroker.net/topic/1570/windows-steuerung)
+    * [Программа управления компьютером GetAdmin](https://forum.iobroker.net/topic/1505/)
+* [Blog article](https://blog.instalator.ru/archives/47) of GetAdmin. Use Google translate, if you are not familiar with the Russian language.
 
 
 ## Changelog
+
+### 0.1.1
+* (Mic-M) Readme updated.
 
 ### 0.1.0
 * (Mic-M) Add states "_processGetStatus" and "_processGetStatusResult" to check if a Windows process (like Chrome browser) is running or not

@@ -7,6 +7,9 @@ nbproject/
 Thumbs.db
 gulpfile.js
 
+#exe files
+files/
+
 # CI test files
 test/
 travis/

@@ -1,8 +1,11 @@
 {
     "common": {
         "name": "windows-control",
-        "version": "0.1.0",
+        "version": "0.1.1",
         "news": {
+            "0.1.1": {
+                "en": "Readme updated."
+            },
             "0.1.0": {
                 "en": "Add states to check if a Windows process (like Chrome browser) is running or not"
             },
