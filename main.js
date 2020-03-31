@@ -18,11 +18,7 @@ const helper = require(path.join(__dirname, 'lib', 'utils.js'));
 // Timer for updating connection intervals
 let updateTimer = null;
 
-/**
- * The adapter instance
- * @type {ioBroker.Adapter}
- */
-let adapter;
+let adapter; // The adapter instance
 
 // All devices per configuration table, like: [{deviceName: 'LivingRoom-PC', deviceIp: '10.10.0.100', active:true}]
 const CONF_DEVICES = [];
@@ -207,15 +203,10 @@ function stateChanges(statePath, obj) {
                     }                
                     getAdminSendCommand(statePath, name, ip, port, type, cmd);
                 } else {
-                    adapter.log.warn('No configration found for [' + name + '], therefore we were not able to send a command.');
+                    adapter.log.warn('No configuration found for [' + name + '], therefore we were not able to send a command.');
                 }            
-
             }
-
         }
-        
-
-
     }
 }
 
@@ -338,7 +329,7 @@ function buildNeededStates() {
                 if (statesUsed.indexOf(statePath) == -1) {
                     // State is no longer needed.
                     adapter.log.info('State [' + statePath + '] is no longer used, so we delete it.');
-                    adapter.delForeignObject(statePath); // Delete state.
+                    adapter.delObject(statePath); // Delete state.
                 }
             }
         }
@@ -352,7 +343,7 @@ function buildNeededStates() {
                 if (channelsUsed.indexOf(statePath) == -1) {
                     // Channel is no longer needed.
                     adapter.log.info('Channel [' + statePath + '] is no longer used, so we delete it.');
-                    adapter.delForeignObject(statePath); // Delete channel.
+                    adapter.delObject(statePath); // Delete channel.
                 }
             }
         }
@@ -383,7 +374,7 @@ function createAdapterObjects(objects, callback) {
                 if (!err && obj) {
                     adapter.log.debug('Object created: ' + objects[numStates][0]);
                 }
-                helper(); // we call function again
+                setImmediate(helper); // we call function again. We use node.js setImmediate() to avoid stack overflows.
             });
         } else {
             // All objects processed
@@ -392,8 +383,6 @@ function createAdapterObjects(objects, callback) {
     }
 
 }
-
-
 
 /**
  * Checks and validates the configuration values of adapter settings
@@ -404,7 +393,7 @@ function initializeConfigValues(callback = undefined) {
 
     // Verify the device table contents
     if(!helper.isLikeEmpty(adapter.config.getAdminDevices)) {
-        // Example: [{deviceName: 'Gästezimmer-PC', deviceIp: '10.10.0.100', devicePort:'8585', active:true}];
+        // Example: [{deviceName: 'GuestRoom-PC', deviceIp: '10.10.0.100', devicePort:'8585', active:true}];
         for (const lpEntry of adapter.config.getAdminDevices) {
             if ( (lpEntry.active != undefined) && (lpEntry.active)) {
     
@@ -422,7 +411,7 @@ function initializeConfigValues(callback = undefined) {
                 // Verify IP address
                 // @ts-ignore - is actually existing
                 let ip = lpEntry.deviceIp;
-                ip = ip.replace(/\s+/g, ''); // remove all whitespaces
+                ip = ip.replace(/\s+/g, ''); // remove all white-spaces
                 const checkIp = ip.match(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/);
                 if (checkIp == null && ip != 'localhost') {
                     adapter.log.warn('[Adapter Configuration Error] Given IP address "' + lpEntry.deviceIp + '" is not valid.');
@@ -431,15 +420,14 @@ function initializeConfigValues(callback = undefined) {
                 }
     
                 // Verify Port
-                let port = lpEntry.devicePort;
-                port = port.replace(/\s+/g, ''); // remove all whitespaces
-                port = parseInt(port);
+                const port = parseInt(lpEntry.devicePort);
                 if(!helper.isLikeEmpty(port) && (port > 1) && (port <= 65535) ) {
                     pass = true;
                 } else {
                     adapter.log.warn('[Adapter Configuration Error] Given port "' + lpEntry.devicePort + '" is not valid.');                    
                 }
 
+                // Finalize
                 if(pass) CONF_DEVICES.push({deviceName: name, deviceIp: ip, devicePort:port});
     
             } 
@@ -451,7 +439,7 @@ function initializeConfigValues(callback = undefined) {
     // Verify the user GetAdmin commands
     if (!helper.isLikeEmpty(adapter.config.ownGetAdminCommands)) {
         let userCmdStr = adapter.config.ownGetAdminCommands;
-        userCmdStr = userCmdStr.replace(/\s+/g, ''); // remove all whitespaces
+        userCmdStr = userCmdStr.replace(/\s+/g, ''); // remove all white-spaces
         let userCmdArray = userCmdStr.split(',');
         userCmdArray = helper.cleanArray(userCmdArray);
         const finalArr = [];
@@ -473,7 +461,6 @@ function initializeConfigValues(callback = undefined) {
     } else {
         CONF_UPDATE_INTERVAL = 0;
     }
-
 
     // Finalize
     adapter.log.info(CONF_DEVICES.length + ' device(s) and ' + CONF_USERCMDS.length + ' user command(s) configured.');

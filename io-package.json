@@ -1,22 +1,79 @@
 {
     "common": {
         "name": "windows-control",
-        "version": "0.1.1",
+        "version": "0.1.2",
         "news": {
+            "0.1.2": {
+                "en": "Several fixes.",
+                "de": "Mehrere Korrekturen.",
+                "ru": "Несколько исправлений.",
+                "pt": "Várias correções.",
+                "nl": "Verschillende oplossingen.",
+                "fr": "Plusieurs correctifs.",
+                "it": "Diverse correzioni",
+                "es": "Varias correcciones.",
+                "pl": "Kilka poprawek.",
+                "zh-cn": "几个修复程序。"
+            },
             "0.1.1": {
-                "en": "Readme updated."
+                "en": "Readme updated.",
+                "de": "Readme aktualisiert.",
+                "ru": "Readme обновлен.",
+                "pt": "Leia-me atualizado.",
+                "nl": "Leesmij bijgewerkt.",
+                "fr": "Fichier Lisez-moi mis à jour.",
+                "it": "File Leggimi aggiornato.",
+                "es": "Léame actualizado.",
+                "pl": "Plik Readme został zaktualizowany.",
+                "zh-cn": "自述文件已更新。"                
             },
             "0.1.0": {
-                "en": "Add states to check if a Windows process (like Chrome browser) is running or not"
+                "en": "Add states to check if a Windows process (like Chrome browser) is running or not",
+                "de": "Datenpunkte hinzugefügt um zu prüfen, ob ein Windows-Prozess (wie der Chrome-Browser) ausgeführt wird oder nicht",
+                "ru": "Добавьте состояния, чтобы проверить, запущен ли процесс Windows (например, браузер Chrome) или нет",
+                "pt": "Adicione estados para verificar se um processo do Windows (como o navegador Chrome) está em execução ou não",
+                "nl": "Voeg staten toe om te controleren of een Windows-proces (zoals de Chrome-browser) actief is of niet",
+                "fr": "Ajoutez des états pour vérifier si un processus Windows (comme le navigateur Chrome) est en cours d'exécution ou non",
+                "it": "Aggiungi stati per verificare se un processo di Windows (come il browser Chrome) è in esecuzione o meno",
+                "es": "Agregue estados para verificar si un proceso de Windows (como el navegador Chrome) se está ejecutando o no",
+                "pl": "Dodaj stany, aby sprawdzić, czy proces systemu Windows (np. Przeglądarka Chrome) działa, czy nie",
+                "zh-cn": "添加状态以检查Windows进程（例如Chrome浏览器）是否正在运行"
             },
             "0.0.3": {
-                "en": "Fix io-package.json (removed one redundand comma, not sure why node.js is not able to autocorrect such minor issue)"
+                "en": "Fix of io-package.json",
+                "de": "Fehler in io-package.json behoben",
+                "ru": "Исправление io-package.json",
+                "pt": "Correção do io-package.json",
+                "nl": "Fix van io-package.json",
+                "fr": "Correction de io-package.json",
+                "it": "Correzione di io-package.json",
+                "es": "Corrección de io-package.json",
+                "pl": "Poprawka pliku io-package.json",
+                "zh-cn": "修复io-package.json"                
             },
             "0.0.2": {
-                "en": "1. Fixed sendkey issue; 2. State _sendKey: provide all supported keys as dropdown; 3. Renamed states: sendKey->_sendKey, connected->_connection"
+                "en": "1. Fixed sendkey issue; 2. State _sendKey: provide all supported keys as dropdown; 3. Renamed states: sendKey->_sendKey, connected->_connection",
+                "de": "1. Sendkey-Problem behoben; 2. State _sendKey: nun alle unterstützten Keys als Dropdown-Liste 3. Umbenannte Datenpunkte: sendKey->_sendKey, connected->_connection",
+                "ru": "1. Исправлена проблема с sendkey; 2. State _sendKey: предоставить все поддерживаемые ключи в раскрывающемся списке; 3. Переименованные состояния: sendKey->_sendKey, connected->_connection",
+                "pt": "1. Corrigido problema no sendkey; 2. State _sendKey: forneça todas as chaves suportadas como menu suspenso; 3. Estados renomeados: sendKey->_sendKey, connected->_connection",
+                "nl": "1. Probleem met sendkey opgelost; 2. State _sendKey: geef alle ondersteunde sleutels als dropdown; 3. Hernoemde namen: sendKey->_sendKey, connected->_connection",
+                "fr": "1. Problème de clé d'envoi fixe; 2. State _sendKey: fournissez toutes les clés prises en charge sous forme de liste déroulante; 3. États renommés: sendKey->_sendKey, connected->_connection",
+                "it": "1. Risolto problema sendkey; 2. Stato _sendKey: fornisce tutte le chiavi supportate come menu a discesa; 3. Stati rinominati: sendKey->_sendKey, connected->_connection",
+                "es": "1. Se corrigió el problema de sendkey; 2. State _sendKey: proporciona todas las claves compatibles como menú desplegable; 3. Estados renombrados: sendKey->_sendKey, connected->_connection",
+                "pl": "1. Naprawiono problem z sendkey; 2. Stan _sendKey: podaj wszystkie obsługiwane klucze jako menu rozwijane; 3. Zmieniono nazwy stanów: sendKey->_sendKey, connected->_connection",
+                "zh-cn": "1.修复了sendkey问题； 2. State _sendKey：提供所有支持的密钥作为下拉列表； 3.重命名状态：sendKey->_sendKey, connected->_connection"
             },
             "0.0.1": {
-                "en": "Initial release"
+                "en": "Initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "初始发行"                
             }
         },
         "title": "Control Windows",
@@ -77,7 +134,14 @@
     "native": {
         "updateConnectionInterval": 300,
         "ownGetAdminCommands": "",
-        "getAdminDevices": []
+        "getAdminDevices": [
+            {
+              "active": true,
+              "deviceName": "PC Name",
+              "deviceIp": "192.168.10.10",
+              "devicePort": "8585"
+            }
+        ]
     },
     "objects": [],
     "instanceObjects": []

@@ -14,7 +14,7 @@
 
 ## Adapter to control Windows devices
 
-This adapter provides controlling Microsoft Windows devices. It is requried the tool GetAdmin being installed on every Windows device which you want to control.
+This adapter provides controlling Microsoft Windows devices. It is required the tool GetAdmin being installed on every Windows device which you want to control.
 <br>
 <strong>Many thanks to [Vladimir Vilisov](https://blog.instalator.ru) for his tool GetAdmin!</strong> 
 
@@ -25,7 +25,7 @@ GetAdmin is a single exe file (776 kB). It was coded by Vladimir Vilisov in Delp
 Download:
  1. Primary source: https://blog.instalator.ru/archives/47
  2. If not available, you will find a copy on this adapter's Github site [in the folder "files"](https://github.com/Mic-M/ioBroker.windows-control/tree/master/files).
- 
+
 
 ### Configuration
 
@@ -33,7 +33,7 @@ Place the `GetAdmin.exe` file in any folder of your Windows device. Execute the 
 1. Top left in the "Server" section:
     * IP: the IP address of your ioBroker server
     * Port: `8585` is the standard port. Usually, there is no need to change this port.
-2. At the top in the "Options" section: Activiate "Minimize on Tray" and "Startup" to autostart the program minimized to the system tray.
+2. At the top in the "Options" section: Activate "Minimize on Tray" and "Startup" to autostart the program minimized to the system tray.
 3. Confirm with "Save".
 
 ![GetAdmin Settings](img/getadmin-settings.png)
@@ -58,6 +58,9 @@ Place the `GetAdmin.exe` file in any folder of your Windows device. Execute the 
 
 ## Changelog
 
+### 0.1.2
+* (Mic-M) Several fixes.
+
 ### 0.1.1
 * (Mic-M) Readme updated.
 
@@ -65,7 +68,7 @@ Place the `GetAdmin.exe` file in any folder of your Windows device. Execute the 
 * (Mic-M) Add states "_processGetStatus" and "_processGetStatusResult" to check if a Windows process (like Chrome browser) is running or not
 
 ### 0.0.3
-* (Mic-M) Fix `io-package.json` (removed one redundand comma, not sure why node.js is not able to autocorrect such minor issue)
+* (Mic-M) `io-package.json` fixed
 
 ### 0.0.2
 * (Mic-M) Fixed sendkey issue
