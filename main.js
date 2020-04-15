@@ -234,7 +234,8 @@ function getAdminSendCommand(statePath, name, ip, port, type, command, callback 
                 adapter.log.debug(name + ' responded with [OK]'); 
                 
                 // We acknowledge the positive response
-                adapter.setState(statePath, {ack:true}); // just send ack:true
+                // Remove due to https://forum.iobroker.net/post/413048
+                //adapter.setState(statePath, {ack:true}); // just send ack:true
                 
                 // Also, we update the _connection state at this point.
                 if (CONF_UPDATE_INTERVAL > 0) adapter.setState(name + '._connection', {val: true, ack: true});
