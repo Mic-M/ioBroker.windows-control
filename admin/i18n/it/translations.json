@@ -1,0 +1,18 @@
+{
+    "Active?": "Attivo?",
+    "Adapter documentation on Github": "Documentazione dell'adattatore su Github",
+    "Adapter: Windows Control": "Adattatore: controllo di Windows",
+    "Add your Windows devices, which you want to control. On each of these devices, the software “Get Admin” must be installed. “Device Name” will be used as part of the states. You can also (temporarily) de-activate devices if you want.": "Aggiungi i tuoi dispositivi Windows, che desideri controllare. Su ciascuno di questi dispositivi, è necessario installare il software 'Get Admin'. Il 'Nome dispositivo' verrà utilizzato come parte degli stati. Puoi anche (temporaneamente) disattivare i dispositivi, se lo desideri.",
+    "Device IP Address": "Indirizzo IP del dispositivo",
+    "Device Name": "Nome del dispositivo",
+    "Enter your own commands, which you entered in the GetAdmin software in column “Command”. No spaces please. Separate multiple values with comma.<br>Leave this field empty, if you have not (yet) defined any commands.": "Inserisci i tuoi comandi, che hai inserito nel software GetAdmin nella colonna 'Comando'. Niente spazi, per favore. Separare più valori con una virgola. <br> Lascia vuoto questo campo, se non hai (ancora) definito alcun comando.",
+    "GetAdmin Commands (comma separated)": "Comandi GetAdmin (separati da virgola)",
+    "If activated, a state “.connected” is being created for each device. These states will be updated every number of seconds as set in the below field and will indicate if the device is connected. 0 disables this function.": "Se attivato, viene creato uno stato '.connected' per ciascun dispositivo. Questi stati verranno aggiornati ogni numero di secondi come impostato nel campo sottostante e indicheranno se il dispositivo è collegato. 0 disabilita questa funzione.",
+    "Port": "Porta",
+    "Seconds (0 = disabled)": "Secondi (0 = disabilitato)",
+    "To use this adapter, the tool GetAdmin is required. Download and setup instructions: see": "Per utilizzare questo adattatore, è necessario lo strumento GetAdmin. Istruzioni per il download e l'installazione: vedere",
+    "Update Interval": "Intervallo di aggiornamento",
+    "Windows Control adapter settings": "Impostazioni dell'adattatore per Windows Control",
+    "Windows devices which you want to control": "Dispositivi Windows che si desidera controllare",
+    "Your own GetAdmin Commands": "I tuoi comandi GetAdmin"
+}

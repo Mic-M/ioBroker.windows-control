@@ -1,0 +1,18 @@
+{
+    "Active?": "Активный?",
+    "Adapter documentation on Github": "Документация по адаптеру на Github",
+    "Adapter: Windows Control": "Адаптер: Windows Control",
+    "Add your Windows devices, which you want to control. On each of these devices, the software “Get Admin” must be installed. “Device Name” will be used as part of the states. You can also (temporarily) de-activate devices if you want.": "Добавьте свои устройства Windows, которыми вы хотите управлять. На каждом из этих устройств должно быть установлено программное обеспечение «Get Admin». «Имя устройства» будет использоваться как часть состояний. Вы также можете (временно) деактивировать устройства, если хотите.",
+    "Device IP Address": "IP-адрес устройства",
+    "Device Name": "Имя устройства",
+    "Enter your own commands, which you entered in the GetAdmin software in column “Command”. No spaces please. Separate multiple values with comma.<br>Leave this field empty, if you have not (yet) defined any commands.": "Введите свои собственные команды, которые вы ввели в программном обеспечении GetAdmin в столбце «Команда». Без пробелов, пожалуйста. Разделите несколько значений запятыми. <br> Оставьте это поле пустым, если вы еще не определили какие-либо команды.",
+    "GetAdmin Commands (comma separated)": "Команды GetAdmin (через запятую)",
+    "If activated, a state “.connected” is being created for each device. These states will be updated every number of seconds as set in the below field and will indicate if the device is connected. 0 disables this function.": "Если активировано, состояние «.connected» создается для каждого устройства. Эти состояния будут обновляться каждые несколько секунд, как указано в поле ниже, и будут указывать, подключено ли устройство. 0 отключает эту функцию.",
+    "Port": "порт",
+    "Seconds (0 = disabled)": "Секунды (0 = отключено)",
+    "To use this adapter, the tool GetAdmin is required. Download and setup instructions: see": "Для использования этого адаптера необходим инструмент GetAdmin. Инструкции по загрузке и настройке: см.",
+    "Update Interval": "Интервал обновления",
+    "Windows Control adapter settings": "Настройки адаптера для Windows Control",
+    "Windows devices which you want to control": "Устройства Windows, которыми вы хотите управлять",
+    "Your own GetAdmin Commands": "Ваши собственные команды GetAdmin"
+}

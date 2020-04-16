@@ -1,0 +1,18 @@
+{
+    "Active?": "Ativo?",
+    "Adapter documentation on Github": "Documentação do adaptador no Github",
+    "Adapter: Windows Control": "Adaptador: Controle do Windows",
+    "Add your Windows devices, which you want to control. On each of these devices, the software “Get Admin” must be installed. “Device Name” will be used as part of the states. You can also (temporarily) de-activate devices if you want.": "Adicione seus dispositivos Windows, que você deseja controlar. Em cada um desses dispositivos, o software 'Get Admin' deve estar instalado. 'Nome do dispositivo' será usado como parte dos estados. Você também pode (temporariamente) desativar os dispositivos, se desejar.",
+    "Device IP Address": "Endereço IP do dispositivo",
+    "Device Name": "Nome do dispositivo",
+    "Enter your own commands, which you entered in the GetAdmin software in column “Command”. No spaces please. Separate multiple values with comma.<br>Leave this field empty, if you have not (yet) defined any commands.": "Digite seus próprios comandos, que você inseriu no software GetAdmin na coluna 'Comando'. Sem espaços, por favor. Separe vários valores com vírgula. <br> Deixe esse campo em branco, se você ainda não definiu nenhum comando.",
+    "GetAdmin Commands (comma separated)": "Comandos GetAdmin (separados por vírgula)",
+    "If activated, a state “.connected” is being created for each device. These states will be updated every number of seconds as set in the below field and will indicate if the device is connected. 0 disables this function.": "Se ativado, um estado '.connected' está sendo criado para cada dispositivo. Esses estados serão atualizados a cada número de segundos, conforme definido no campo abaixo e indicará se o dispositivo está conectado. 0 desativa esta função.",
+    "Port": "Porta",
+    "Seconds (0 = disabled)": "Segundos (0 = desativado)",
+    "To use this adapter, the tool GetAdmin is required. Download and setup instructions: see": "Para usar este adaptador, a ferramenta GetAdmin é necessária. Instruções de download e configuração: consulte",
+    "Update Interval": "Intervalo de atualização",
+    "Windows Control adapter settings": "Configurações do adaptador para Windows Control",
+    "Windows devices which you want to control": "Dispositivos Windows que você deseja controlar",
+    "Your own GetAdmin Commands": "Seus próprios comandos GetAdmin"
+}

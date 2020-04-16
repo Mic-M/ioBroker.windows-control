@@ -1,0 +1,18 @@
+{
+    "Active?": "Active?",
+    "Adapter documentation on Github": "Adapter documentation on Github",
+    "Adapter: Windows Control": "Adapter: Windows Control",
+    "Add your Windows devices, which you want to control. On each of these devices, the software “Get Admin” must be installed. “Device Name” will be used as part of the states. You can also (temporarily) de-activate devices if you want.": "Add your Windows devices, which you want to control. On each of these devices, the software \"Get Admin\" must be installed. “Device Name” will be used as part of the states. You can also (temporarily) de-activate devices if you want.",
+    "Device IP Address": "Device IP Address",
+    "Device Name": "Device Name",
+    "Enter your own commands, which you entered in the GetAdmin software in column “Command”. No spaces please. Separate multiple values with comma.<br>Leave this field empty, if you have not (yet) defined any commands.": "Enter your own commands, which you entered in the GetAdmin software in column “Command”. No spaces please. Separate multiple values with comma.<br>Leave this field empty, if you have not (yet) defined any commands.",
+    "GetAdmin Commands (comma separated)": "GetAdmin Commands (comma separated)",
+    "If activated, a state “.connected” is being created for each device. These states will be updated every number of seconds as set in the below field and will indicate if the device is connected. 0 disables this function.": "If activated, a state “.connected” is being created for each device. These states will be updated every number of seconds as set in the below field and will indicate if the device is connected. 0 deactivates this function.",
+    "Port": "Port",
+    "Seconds (0 = disabled)": "Seconds (0 = disabled)",
+    "To use this adapter, the tool GetAdmin is required. Download and setup instructions: see": "To use this adapter, the tool GetAdmin is required. Download and setup instructions: see",
+    "Update Interval": "Update Interval",
+    "Windows Control adapter settings": "Adapter settings for Windows Control",
+    "Windows devices which you want to control": "Windows devices which you want to control",
+    "Your own GetAdmin Commands": "Your own GetAdmin Commands"
+}

@@ -1,0 +1,18 @@
+{
+    "Active?": "活性？",
+    "Adapter documentation on Github": "Github上的适配器文档",
+    "Adapter: Windows Control": "适配器：Windows Control",
+    "Add your Windows devices, which you want to control. On each of these devices, the software “Get Admin” must be installed. “Device Name” will be used as part of the states. You can also (temporarily) de-activate devices if you want.": "添加您要控制的Windows设备。在每个这些设备上，必须安装软件“ Get Admin”。 “设备名称”将用作状态的一部分。如果需要，您也可以（暂时）停用设备。",
+    "Device IP Address": "设备IP地址",
+    "Device Name": "设备名称",
+    "Enter your own commands, which you entered in the GetAdmin software in column “Command”. No spaces please. Separate multiple values with comma.<br>Leave this field empty, if you have not (yet) defined any commands.": "输入您自己的命令，您在GetAdmin软件的“命令”列中输入了这些命令。请没有空格。用逗号分隔多个值。 <br>如果尚未定义任何命令，请将此字段留空。",
+    "GetAdmin Commands (comma separated)": "GetAdmin命令（逗号分隔）",
+    "If activated, a state “.connected” is being created for each device. These states will be updated every number of seconds as set in the below field and will indicate if the device is connected. 0 disables this function.": "如果激活，则将为每个设备创建状态“ .connected”。这些状态将按照以下字段中的设置每隔几秒钟更新一次，并将指示设备是否已连接。 0禁用此功能。",
+    "Port": "港口",
+    "Seconds (0 = disabled)": "秒（0 =禁用）",
+    "To use this adapter, the tool GetAdmin is required. Download and setup instructions: see": "要使用此适配器，需要工具GetAdmin。下载和设置说明：请参阅",
+    "Update Interval": "更新间隔",
+    "Windows Control adapter settings": "Windows Control的适配器设置",
+    "Windows devices which you want to control": "您要控制的Windows设备",
+    "Your own GetAdmin Commands": "您自己的GetAdmin命令"
+}

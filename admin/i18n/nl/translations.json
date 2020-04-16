@@ -1,0 +1,18 @@
+{
+    "Active?": "Actief?",
+    "Adapter documentation on Github": "Adapterdocumentatie op Github",
+    "Adapter: Windows Control": "Adapter: Windows-besturing",
+    "Add your Windows devices, which you want to control. On each of these devices, the software “Get Admin” must be installed. “Device Name” will be used as part of the states. You can also (temporarily) de-activate devices if you want.": "Voeg uw Windows-apparaten toe die u wilt bedienen. Op elk van deze apparaten moet de software 'Get Admin' zijn geïnstalleerd. 'Device Name' zal worden gebruikt als onderdeel van de staten. Desgewenst kunt u apparaten (tijdelijk) deactiveren.",
+    "Device IP Address": "IP-adres van apparaat",
+    "Device Name": "Toestelnaam",
+    "Enter your own commands, which you entered in the GetAdmin software in column “Command”. No spaces please. Separate multiple values with comma.<br>Leave this field empty, if you have not (yet) defined any commands.": "Voer uw eigen commando's in die u in de GetAdmin-software hebt ingevoerd in de kolom 'Command'. Geen spaties aub. Scheid meerdere waarden met een komma. <br> Laat dit veld leeg als u (nog) geen commando's heeft gedefinieerd.",
+    "GetAdmin Commands (comma separated)": "GetAdmin-opdrachten (gescheiden door komma's)",
+    "If activated, a state “.connected” is being created for each device. These states will be updated every number of seconds as set in the below field and will indicate if the device is connected. 0 disables this function.": "Indien geactiveerd, wordt voor elk apparaat een status '.connected' gemaakt. Deze statussen worden om de zoveel seconden bijgewerkt zoals ingesteld in het onderstaande veld en geven aan of het apparaat is aangesloten. 0 schakelt deze functie uit.",
+    "Port": "Port",
+    "Seconds (0 = disabled)": "Seconden (0 = uitgeschakeld)",
+    "To use this adapter, the tool GetAdmin is required. Download and setup instructions: see": "Om deze adapter te gebruiken, is de tool GetAdmin vereist. Instructies voor downloaden en instellen: zie",
+    "Update Interval": "Bijwerkingsonderbreking",
+    "Windows Control adapter settings": "Adapterinstellingen voor Windows Control",
+    "Windows devices which you want to control": "Windows-apparaten die u wilt bedienen",
+    "Your own GetAdmin Commands": "Uw eigen GetAdmin-opdrachten"
+}
