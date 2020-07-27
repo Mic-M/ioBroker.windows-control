@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "windows-control",
-        "version": "0.1.3",
+        "version": "0.1.4",
         "news": {
+            "0.1.4": {
+                "en": "Updated lodash dependency from 4.17.15 to 4.17.19",
+                "de": "Aktualisierte lodash-Abhängigkeit von 4.17.15 auf 4.17.19",
+                "ru": "Обновлена зависимость от lodash с 4.17.15 до 4.17.19",
+                "pt": "Dependência do lodash atualizada de 4.17.15 para 4.17.19",
+                "nl": "Lodash-afhankelijkheid bijgewerkt van 4.17.15 tot 4.17.19",
+                "fr": "Dépendance de lodash mise à jour de 4.17.15 à 4.17.19",
+                "it": "Dipendenza lodash aggiornata dal 4.17.15 al 4.17.19",
+                "es": "Dependencia lodash actualizada de 4.17.15 a 4.17.19",
+                "pl": "Zaktualizowano zależność lodash z 4.17.15 do 4.17.19",
+                "zh-cn": "将lodash依赖性从4.17.15更新为4.17.19"
+            },
             "0.1.3": {
                 "en": "Internal only: Correction to support compatibility with js-adapter 3.x, Use gulp for translations (which is resulting in files under admin/i18n/)",
                 "de": "Nur intern: Korrektur zur Unterstützung der Kompatibilität mit js-adapter 3.x, nun wird gulp für Übersetzungen verwendet (was zu Dateien unter admin/i18n/ führt)",
