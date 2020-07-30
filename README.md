@@ -58,6 +58,9 @@ Place the `GetAdmin.exe` file in any folder of your Windows device. Execute the 
 
 ## Changelog
 
+### 0.1.5
+* (Mic-M) Added [Sentry](https://github.com/ioBroker/plugin-sentry)
+
 ### 0.1.4
 * (Mic-M) Updated lodash dependency from 4.17.15 to 4.17.19
 

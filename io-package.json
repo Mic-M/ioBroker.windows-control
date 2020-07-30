@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "windows-control",
-        "version": "0.1.4",
+        "version": "0.1.5",
         "news": {
+            "0.1.5": {
+                "en": "Added Sentry support.",
+                "de": "Sentry-Unterstützung hinzugefügt.",
+                "ru": "Добавлена поддержка Sentry.",
+                "pt": "Adicionado suporte Sentry.",
+                "nl": "Sentry-ondersteuning toegevoegd.",
+                "fr": "Ajout du support Sentry.",
+                "it": "Aggiunto supporto Sentry.",
+                "es": "Se agregó soporte de Centinela.",
+                "pl": "Dodano obsługę Wartownika.",
+                "zh-cn": "增加了哨兵支持。"
+            },
             "0.1.4": {
                 "en": "Updated lodash dependency from 4.17.15 to 4.17.19",
                 "de": "Aktualisierte lodash-Abhängigkeit von 4.17.15 auf 4.17.19",
@@ -152,7 +164,12 @@
             {
                 "js-controller": ">=1.4.2"
             }
-        ]
+        ],
+        "plugins": {
+            "sentry": {
+                "dsn": "https://23601b52376b42e38f883a4b51fbff99@sentry.iobroker.net/92"
+            }
+        }
     },
     "native": {
         "updateConnectionInterval": 300,
