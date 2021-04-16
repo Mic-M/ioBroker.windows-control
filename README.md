@@ -29,6 +29,10 @@ Download:
  1. Primary source: https://blog.instalator.ru/archives/47
  2. If not available, you will find a copy on this adapter's Github site [in the folder "files"](https://github.com/Mic-M/ioBroker.windows-control/tree/master/files).
 
+### Security Note
+Please note that the tool GetAdmin allows all users with access to the IP & Port configured (see below) vast control of your device. Please make sure that you secure access to the tool. 
+
+Because of this vast remote control over your device the GetAdmin tool will obviously look like a trojan horse to most virus scanners. In case of a detection you should carefully check the full results and see if there are any malcious actions detected (most virus scanners already complain about starting / stopping certain Applications / Services on your device, which the tool obviously has to do). But still bear in mind: if anybody else can access GetAdmin, he can control your computer. So make sure only you / the adapter can.
 
 ### Configuration
 
