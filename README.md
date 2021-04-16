@@ -32,7 +32,7 @@ Download:
 ### Security Note
 Please note that the tool GetAdmin allows all users with access to the IP & Port configured (see below) vast control of your device. Please make sure that you secure access to the tool, for example using the windows firewall and allow access only from the IP of your ioBroker Server.
 
-Because of this remote control over your device the GetAdmin tool will obviously look like a trojan horse to most virus scanners. In case of a detection you should carefully check the full results and see if there are any malcious actions detected (most virus scanners already complain about starting / stopping certain Applications / Services on your device, which the tool obviously has to do). But still bear in mind: if anybody else can access GetAdmin, he can control also start / stop Applications on your computer or even shut it down. So make sure only you / this adapter can.
+Because of this remote control over your device the GetAdmin tool will obviously look like a trojan horse to some virus scanners. In case of a detection you should carefully check the full results and see if there are any malcious actions detected (most virus scanners already complain about starting / stopping certain Applications / Services on your device, which the tool obviously has to do). But still bear in mind: if anybody else can access GetAdmin, he can control also start / stop Applications on your computer or even shut it down. So make sure only you / this adapter can.
 
 ### Configuration
 
